@@ -1,0 +1,156 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+.to-do-list {
+    width: 500px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.add-task-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.text-area {
+    min-width: 96%;
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.add-task-container input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.date-picker{
+    flex-grow: 1;
+    width: 96%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;   
+}
+.add-task-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.add-task-container button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: 0.2s ease-in-out;
+}
+
+.task-card:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.priority-bar {
+    width: 20px;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+}
+
+.urgent .priority-bar {
+    background-color: red;
+}
+
+.important .priority-bar {
+    background-color: yellow;
+}
+
+.optional .priority-bar {
+    background-color: lightblue;
+}
+
+.task-description {
+    flex-grow: 1;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.task-description.completed {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+.edit-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.edit-button i {
+    font-size: 16px;
+    color: #ccc;
+}
+
+.edit-button:hover i {
+    color: #007bff;
+}
+
+.checkbox {
+    margin-right: 10px;
+}
+
+.checkbox:checked {
+    background-color: #007bff;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#total-tasks,
+#completed-tasks {
+    font-weight: bold;
+}
+
+/* For responsive design, consider using media queries to adjust styles
+     for different screen sizes. */

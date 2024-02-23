@@ -1,0 +1,27 @@
+.todo-list {
+    margin: 20px;
+  }
+  
+  .todo-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .todo-item h1 {
+    margin-top: 0;
+  }
+  
+  .todo-item button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .todo-item button:hover {
+    background-color: #cc0000;
+  }
+  
