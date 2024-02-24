@@ -5,7 +5,7 @@ import Dashbord from './Components/Dashbord/Dashbord';
 function App() {
   return (
     <div className="App">
-<Dashbord/>
+      <Dashbord />
     </div>
   );
 }

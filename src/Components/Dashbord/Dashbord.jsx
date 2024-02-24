@@ -4,6 +4,8 @@ import Tasklist from '../Tasklist/Tasklist'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreateTodoData, UpdateTodoData, editModestatus, fetchTodoData } from '../../Redux/Slice';
+import Footer from '../Footer/Footer';
+
 
 
 function Dashbord() {
@@ -17,12 +19,12 @@ function Dashbord() {
         setValue,
         formState: { errors }
     } = useForm();
-if(editMode){
-    setValue("title",tastDetails.title)
-    setValue("priority",tastDetails.priority)
-    setValue("dueDate",tastDetails.dueDate)
-    setValue("description",tastDetails.description)
-}
+    if (editMode) {
+        setValue("title", tastDetails.title)
+        setValue("priority", tastDetails.priority)
+        setValue("dueDate", tastDetails.dueDate)
+        setValue("description", tastDetails.description)
+    }
     const onSubmit = async (data) => {
         if (editMode) {
             await dispatch(UpdateTodoData({ id: tastDetails._id, data: data }))
@@ -42,6 +44,7 @@ if(editMode){
     }, [dispatch])
 
     const handleCancel = () => {
+        reset()
         dispatch(editModestatus(false))
 
     }
@@ -60,7 +63,7 @@ if(editMode){
                     </select>
                     {editMode ?
                         <>
-                            <button type='submit' id="add-task-button">update</button>
+                            <button type='submit' id="add-task-button" style={{ marginRight: "10px" }}>update</button>
                             <button type='button' id="add-task-button" onClick={() => handleCancel()}>cancel</button>
                         </>
 
@@ -68,7 +71,7 @@ if(editMode){
                         <button type='submit' id="add-task-button"> + </button>
                     }
                 </div>
-                <input type="date" className='date-picker' name='dueDate'   {...register("dueDate")}  />
+                <input type="date" className='date-picker' name='dueDate'   {...register("dueDate")} />
                 <textarea className='text-area' placeholder="Enter Descripion here" name='description'   {...register("description")}></textarea>
             </form>
             <div class="task-list" ></div>
@@ -77,6 +80,8 @@ if(editMode){
                 Total tasks: <span id="total-tasks">{totalTask}</span>, Completed:
                 <span id="completed-tasks"></span>
             </footer>
+
+            <Footer />
         </div>
     )
 }
