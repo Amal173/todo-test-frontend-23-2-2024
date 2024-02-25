@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { DeleteTodoData, editModestatus, editTaskStatus, fetchTodoData, gettaskDetails } from '../../Redux/Slice';
+import { DeleteTodoData, editModestatus, editTaskStatus, fetchTodoData, gettaskDetails, updateTaskOrder } from '../../Redux/Slice';
 import './Tasklist.css'
 import { Collapse, Divider } from 'antd';
 import { Button, Modal } from 'antd';
+import EditIcon from '@mui/icons-material/Edit';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
-function Tasklist({ priority }) {
+import dayjs from 'dayjs';
+function Tasklist({ priority ,todo}) {
+   
+    const dispatch = useDispatch()
     const [open, setOpen] = useState(false);
     const [id, setId] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
-    const dispatch = useDispatch()
-    const { todo } = useSelector((state) => state.todo)
     const showModal = (id) => {
         setId(id)
         setOpen(true);
@@ -59,9 +60,34 @@ function Tasklist({ priority }) {
         event.stopPropagation();
     };
 
+    
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return; 
+    const items = Array.from(todo?.todo);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    const orderData = items.map((task, index) => ({ id: task._id, order: index }));
+    await dispatch(updateTaskOrder(orderData))
+   await dispatch(fetchTodoData())
+  };
+
+  const calculateRemainingTime = (dueDate,time) => {
+    const DueDate = new Date(dueDate);
+    const currentDate = new Date();
+    const remainingTime = DueDate.getTime(time) - currentDate.getTime();
+    if (remainingTime <= 0) {
+        return 'Task expired';
+    } else {
+        const remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+        const remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        return `${remainingDays} days, ${remainingHours} hours, ${remainingMinutes} minutes`;
+    }
+};
+
     return (
         <>
-            <DragDropContext>
+            <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="todo-list">
                     {(provided) => (
                         <div className='todo-list' ref={provided.innerRef} {...provided.droppableProps}>
@@ -81,8 +107,10 @@ function Tasklist({ priority }) {
                                                         <div>
                                                             <p><strong>Discription</strong> : {data.description}</p>
                                                             <p><strong>DueDate</strong> :{data.dueDate}</p>
+                                                            <p><strong>DueDate</strong> :{data.time}</p>
                                                             <p><strong>Priority</strong> : {data.priority}</p>
                                                             <p><strong>Status</strong> : {data.status}</p>
+                                                            <h3>Task in: {calculateRemainingTime(`${data.dueDate} ${data.time}`)}</h3>
                                                             <Button type="danger" onClick={() => showModal(data._id)}>Delete</Button>
                                                             <Modal
                                                                 title="Title"
@@ -93,7 +121,7 @@ function Tasklist({ priority }) {
                                                             >
                                                                 <p>Do You Want To Delete This Task...?</p>
                                                             </Modal>
-                                                            <button onClick={() => HandleEdit(data)}>edit</button>
+                                                            <button onClick={() => HandleEdit(data)} style={{ borderRadius: "7px", alignItems:"center" }}><EditIcon style={{ fontSize: 17 }}/>edit</button>
                                                         </div>
                                                     </Collapse.Panel>
                                                 </Collapse>

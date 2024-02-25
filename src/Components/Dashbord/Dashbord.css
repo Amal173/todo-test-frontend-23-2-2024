@@ -1,18 +1,21 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     background-color: #f2f2f2;
 }
-
+.container{
+    margin: 0 auto;
+}
 .to-do-list {
     width: 500px;
-    margin: 0 auto;
+    margin: 100px auto;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: white;
+   
 }
 
 h1 {
@@ -35,7 +38,10 @@ h1 {
     border-radius: 5px;
     margin-right: 10px;
 }
-
+.date-time{
+    display: flex;
+    width: 100% ;
+}
 .add-task-container input {
     flex-grow: 1;
     padding: 10px;
@@ -45,7 +51,7 @@ h1 {
 }
 .date-picker{
     flex-grow: 1;
-    width: 96%;
+    /* width: 60%; */
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ccc;

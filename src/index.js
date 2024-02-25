@@ -6,12 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import { store } from "./Redux/Store"
 import { MantineProvider } from '@mantine/core';
 import { Provider } from 'react-redux'
+import { BrowserRouter } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <Provider store={store}>
     <MantineProvider>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
     </MantineProvider>
   </Provider>
 

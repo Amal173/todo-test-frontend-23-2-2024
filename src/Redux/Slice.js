@@ -8,7 +8,8 @@ const initialState = {
 }
 
 export const fetchTodoData = createAsyncThunk("todo/fetchTodoData",async () => {
-    const response = await axios.get(`http://localhost:6060/todo`);
+  const id= localStorage.getItem('userId')
+    const response = await axios.get(`http://localhost:6060/todo?id=${id}`);
     return response.data;
   }
 )
@@ -25,9 +26,18 @@ export const CreateTodoData = createAsyncThunk("todo/CreateTodoData",async (data
     return response.data;
   }
 )
-export const UpdateTodoData = createAsyncThunk("todo/CreateTodoData",async ({id,data}) => {
+
+
+export const UpdateTodoData = createAsyncThunk("todo/UpdateTodoData",async ({id,data}) => {
   console.log(data,id);
     const response = await axios.put(`http://localhost:6060/todo/${id}`,{data});
+    return response.data
+  }
+)
+
+export const updateTaskOrder = createAsyncThunk("todo/updateTaskOrder",async (orderData) => {
+  console.log(orderData);
+    const response = await axios.post(`http://localhost:6060/todo/order`,orderData);
     return response.data
   }
 )
