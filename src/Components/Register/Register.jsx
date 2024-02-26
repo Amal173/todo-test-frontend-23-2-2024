@@ -16,8 +16,10 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Register = () => {
-    const dispatch =useDispatch()
-    const navigate=useNavigate()
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -29,14 +31,15 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-   await dispatch(CreateUser(formData))
-   if (Cookies.get("token")) {
-       navigate('/dashbord')
-   }
-};
+
+    await dispatch(CreateUser(formData))
+
+    if (Cookies.get("token")) {
+      navigate('/dashbord')
+    }
+  };
 
   const defaultTheme = createTheme();
 
@@ -56,7 +59,7 @@ const Register = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-           Register
+            Register
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>

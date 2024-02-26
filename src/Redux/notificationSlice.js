@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
 const initialState = {
   notifications:[],
 }
@@ -24,13 +25,8 @@ export const notificationSlice = createSlice({
       .addCase(fetchNotifications.fulfilled, (state,{payload}) => {
         state.notifications = payload;
       })
-
-
-
     }
 })
 
-
-// export const {gettaskDetails,editModestatus } = todoSlice.actions
 
 export default notificationSlice.reducer

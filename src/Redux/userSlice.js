@@ -61,6 +61,4 @@ export const userSlice = createSlice({
 })
 
 
-// export const {gettaskDetails,editModestatus } = todoSlice.actions
-
 export default userSlice.reducer
