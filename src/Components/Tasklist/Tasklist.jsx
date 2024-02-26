@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserData } from '../../Redux/userSlice';
 import React, { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
+import { ClipLoader } from 'react-spinners';
 import './Tasklist.css';
-
 
 
 function Tasklist({ priority, todo }) {
@@ -15,6 +15,7 @@ function Tasklist({ priority, todo }) {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [id, setId] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [shareTask, setShareTask] = useState(null);
     const [shareModalVisible, setShareModalVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -26,7 +27,7 @@ function Tasklist({ priority, todo }) {
         dispatch(fetchTodoData());
         dispatch(fetchUserData());
 
-    }, [dispatch]);
+    }, [dispatch, todo]);
 
     const handleStatus = async (id, status) => {
         const newStatus = status === 'uncompleted' ? 'completed' : 'uncompleted';
@@ -63,12 +64,17 @@ function Tasklist({ priority, todo }) {
 
     const handleDragEnd = async (result) => {
         if (!result.destination) return;
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
         const items = Array.from(todo?.todo);
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
         const orderData = items.map((task, index) => ({ id: task._id, order: index }));
         await dispatch(updateTaskOrder(orderData));
-        dispatch(fetchTodoData());
+
+    
     };
 
     const calculateRemainingTime = (dueDate, time) => {
@@ -106,7 +112,8 @@ function Tasklist({ priority, todo }) {
 
     return (
         <>
-            <DragDropContext onDragEnd={handleDragEnd}>
+           <div className="tasklist-container"> 
+           <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="todo-list">
                     {(provided) => (
                         <div className='todo-list' ref={provided.innerRef} {...provided.droppableProps}>
@@ -202,6 +209,12 @@ function Tasklist({ priority, todo }) {
             >
                 <p>Do you want to delete this task?</p>
             </Modal>
+            {loading && (
+        <div className="loading-overlay">
+            <ClipLoader color="#000" loading={true} size={50} />
+        </div>
+    )}
+           </div>
         </>
     );
 }

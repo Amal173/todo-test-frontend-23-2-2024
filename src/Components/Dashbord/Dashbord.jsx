@@ -64,7 +64,7 @@ function Dashbord() {
     const onChangeTime = (time, timeString) => {
         setValue("time", timeString)
         setValue("userId", localStorage.getItem('userId'))
-        
+
     };
 
     return (
@@ -75,8 +75,13 @@ function Dashbord() {
                     <h1>To-Do List</h1>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div class="add-task-container">
-                            <input type="text" placeholder="Add new task..." id="new-task" name='title'  {...register("title")} />
-                            <select id="task-filter" name='priority'   {...register("priority")} onChange={(e) => setPriority(e.target.value)}>
+                            <input type="text" placeholder="Add new task..." id="new-task" name='title'  {...register("title", {
+                                required: true,
+                            })} />
+
+                            <select id="task-filter" name='priority'   {...register("priority", {
+                                required: true,
+                            })} onChange={(e) => setPriority(e.target.value)}>
                                 <option value="all">All</option>
                                 <option value="urgent">Urgent</option>
                                 <option value="important">Important</option>
@@ -92,8 +97,12 @@ function Dashbord() {
                                 <button type='submit' id="add-task-button"> + </button>
                             }
                         </div>
+
                         <div className='date-time'>
-                            <input type="date" className='date-picker' name='dueDate'   {...register("dueDate")} />
+                            <input type="date" className='date-picker' name='dueDate'   {...register("dueDate", {
+                                required: true,
+                            })} />
+
                             {editMode ?
                                 <>
                                     <TimePicker
@@ -107,7 +116,13 @@ function Dashbord() {
                                 <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')} style={{ width: 200, height: 40 }} />
                             }
                         </div>
-                        <textarea className='text-area' placeholder="Enter Descripion here" name='description'   {...register("description")}></textarea>
+
+                        <textarea className='text-area' placeholder="Enter Descripion here" name='description'   {...register("description", {
+                            required: true,
+                        })}></textarea>
+                        {(errors.description && errors.description.type === "required") || (errors.dueDate && errors.dueDate.type === "required") || (errors.title && errors.title.type === "required") && (
+                            <p className="errorMsg">All fields are mandatory.</p>
+                        )}
                     </form>
                     <div className="task-list" ></div>
                     <Tasklist priority={priority} todo={todo} />

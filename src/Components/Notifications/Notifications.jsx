@@ -19,6 +19,7 @@ const Notifications = () => {
   return (
     <>
       <Header />
+        <h1>notifications</h1>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <List
           style={{ width: '50%' }} 
